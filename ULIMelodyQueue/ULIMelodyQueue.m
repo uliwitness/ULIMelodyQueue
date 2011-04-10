@@ -330,7 +330,8 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		
 		if( mDone )
 			break;
-	}	
+	}
+	
 	// set the volume of the queue
 	Float32		volume = 1.0;
 	err = AudioQueueSetParameter( mQueue, kAudioQueueParam_Volume, volume );
@@ -340,13 +341,15 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		return;
 	}
 	
+	// Make sure we get notified when playback stops:
 	err = AudioQueueAddPropertyListener( mQueue, kAudioQueueProperty_IsRunning, ULIMelodyQueueIsRunningCallback, NULL );
 	if( err != noErr )
 	{
 		NSLog( @"Couldn't add listener to queue (%d).", err );
 		return;
 	}
-
+	
+	// Turn on whatever is so nice to let us change the sound's pitch:
 	UInt32 propValue = 1;
 	err = AudioQueueSetProperty( mQueue, kAudioQueueProperty_EnableTimePitch, &propValue, sizeof(propValue) );
 	if( err != noErr )
@@ -355,6 +358,7 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		return;
 	}
 	
+	// Actually change the pitch:
 	Float32		pitch = 4 * 100;
 	err = AudioQueueSetParameter( mQueue, kAudioQueueParam_Pitch, pitch );
 	if( err != noErr )
@@ -363,6 +367,7 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		return;
 	}
 	
+	// Kick off playback:
 	err = AudioQueueStart( mQueue, NULL );
 	if( err != noErr )
 	{
