@@ -13,6 +13,11 @@
 		55D33FBB1351BE90006A197D /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D33FB91351BE90006A197D /* Credits.rtf */; };
 		55D33FBE1351BE90006A197D /* ULIMelodyQueueAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D33FBD1351BE90006A197D /* ULIMelodyQueueAppDelegate.m */; };
 		55D33FC11351BE90006A197D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D33FBF1351BE90006A197D /* MainMenu.xib */; };
+		55D33FC91351BEAE006A197D /* ULIMelodyQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D33FC81351BEAE006A197D /* ULIMelodyQueue.m */; };
+		55D33FF81351D5EC006A197D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D33FF71351D5EC006A197D /* AudioToolbox.framework */; };
+		55D340181351E16A006A197D /* snd_128.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 55D340151351E16A006A197D /* snd_128.aiff */; };
+		55D340191351E16A006A197D /* snd_129.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 55D340161351E16A006A197D /* snd_129.aiff */; };
+		55D3401A1351E16A006A197D /* snd_146.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 55D340171351E16A006A197D /* snd_146.aiff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,14 +26,21 @@
 		55D33FAD1351BE8F006A197D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		55D33FAE1351BE8F006A197D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		55D33FAF1351BE8F006A197D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		55D33FB21351BE8F006A197D /* ULIMelodyQueue-Info.plist */ = {isa = PBXFileReference; path = "ULIMelodyQueue-Info.plist"; sourceTree = "<group>"; };
+		55D33FB21351BE8F006A197D /* ULIMelodyQueue-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ULIMelodyQueue-Info.plist"; sourceTree = "<group>"; };
 		55D33FB41351BE8F006A197D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		55D33FB61351BE8F006A197D /* ULIMelodyQueue-Prefix.pch */ = {isa = PBXFileReference; path = "ULIMelodyQueue-Prefix.pch"; sourceTree = "<group>"; };
+		55D33FB61351BE8F006A197D /* ULIMelodyQueue-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ULIMelodyQueue-Prefix.pch"; sourceTree = "<group>"; };
 		55D33FB71351BE90006A197D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55D33FBA1351BE90006A197D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		55D33FBC1351BE90006A197D /* ULIMelodyQueueAppDelegate.h */ = {isa = PBXFileReference; path = ULIMelodyQueueAppDelegate.h; sourceTree = "<group>"; };
+		55D33FBC1351BE90006A197D /* ULIMelodyQueueAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ULIMelodyQueueAppDelegate.h; sourceTree = "<group>"; };
 		55D33FBD1351BE90006A197D /* ULIMelodyQueueAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ULIMelodyQueueAppDelegate.m; sourceTree = "<group>"; };
 		55D33FC01351BE90006A197D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		55D33FC71351BEAE006A197D /* ULIMelodyQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ULIMelodyQueue.h; sourceTree = "<group>"; };
+		55D33FC81351BEAE006A197D /* ULIMelodyQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ULIMelodyQueue.m; sourceTree = "<group>"; };
+		55D33FF61351D2D8006A197D /* UKTypecastMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UKTypecastMacros.h; path = ../../UliKit/UKTypecastMacros.h; sourceTree = "<group>"; };
+		55D33FF71351D5EC006A197D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = ../../../../../System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<group>"; };
+		55D340151351E16A006A197D /* snd_128.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = snd_128.aiff; sourceTree = "<group>"; };
+		55D340161351E16A006A197D /* snd_129.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = snd_129.aiff; sourceTree = "<group>"; };
+		55D340171351E16A006A197D /* snd_146.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = snd_146.aiff; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +49,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55D33FAB1351BE8F006A197D /* Cocoa.framework in Frameworks */,
+				55D33FF81351D5EC006A197D /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				55D33FAA1351BE8F006A197D /* Cocoa.framework */,
+				55D33FF71351D5EC006A197D /* AudioToolbox.framework */,
 				55D33FAC1351BE8F006A197D /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -84,6 +98,9 @@
 			children = (
 				55D33FBC1351BE90006A197D /* ULIMelodyQueueAppDelegate.h */,
 				55D33FBD1351BE90006A197D /* ULIMelodyQueueAppDelegate.m */,
+				55D33FC71351BEAE006A197D /* ULIMelodyQueue.h */,
+				55D33FC81351BEAE006A197D /* ULIMelodyQueue.m */,
+				55D33FF61351D2D8006A197D /* UKTypecastMacros.h */,
 				55D33FBF1351BE90006A197D /* MainMenu.xib */,
 				55D33FB11351BE8F006A197D /* Supporting Files */,
 			);
@@ -98,6 +115,9 @@
 				55D33FB61351BE8F006A197D /* ULIMelodyQueue-Prefix.pch */,
 				55D33FB71351BE90006A197D /* main.m */,
 				55D33FB91351BE90006A197D /* Credits.rtf */,
+				55D340151351E16A006A197D /* snd_128.aiff */,
+				55D340161351E16A006A197D /* snd_129.aiff */,
+				55D340171351E16A006A197D /* snd_146.aiff */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -155,6 +175,9 @@
 				55D33FB51351BE8F006A197D /* InfoPlist.strings in Resources */,
 				55D33FBB1351BE90006A197D /* Credits.rtf in Resources */,
 				55D33FC11351BE90006A197D /* MainMenu.xib in Resources */,
+				55D340181351E16A006A197D /* snd_128.aiff in Resources */,
+				55D340191351E16A006A197D /* snd_129.aiff in Resources */,
+				55D3401A1351E16A006A197D /* snd_146.aiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +190,7 @@
 			files = (
 				55D33FB81351BE90006A197D /* main.m in Sources */,
 				55D33FBE1351BE90006A197D /* ULIMelodyQueueAppDelegate.m in Sources */,
+				55D33FC91351BEAE006A197D /* ULIMelodyQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +305,7 @@
 				55D33FC61351BE90006A197D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -7,6 +7,8 @@
 //
 
 #import "ULIMelodyQueueAppDelegate.h"
+#import "ULIMelodyQueue.h"
+
 
 @implementation ULIMelodyQueueAppDelegate
 
@@ -14,7 +16,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	// Insert code here to initialize your application
+	ULIMelodyQueue	*	melodyPlayer = [[ULIMelodyQueue alloc] initWithInstrument: [[NSBundle mainBundle] URLForResource: @"snd_128" withExtension: @"aiff"]];
+	[melodyPlayer playOne];
 }
 
 @end

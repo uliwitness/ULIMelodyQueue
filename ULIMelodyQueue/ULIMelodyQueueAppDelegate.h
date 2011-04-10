@@ -8,8 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ULIMelodyQueueAppDelegate : NSObject <NSApplicationDelegate> {
-@private
+@interface ULIMelodyQueueAppDelegate : NSObject <NSApplicationDelegate>
+{
 	NSWindow *window;
 }
 
