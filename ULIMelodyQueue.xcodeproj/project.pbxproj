@@ -1,0 +1,288 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		55D33FAB1351BE8F006A197D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D33FAA1351BE8F006A197D /* Cocoa.framework */; };
+		55D33FB51351BE8F006A197D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55D33FB31351BE8F006A197D /* InfoPlist.strings */; };
+		55D33FB81351BE90006A197D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D33FB71351BE90006A197D /* main.m */; };
+		55D33FBB1351BE90006A197D /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D33FB91351BE90006A197D /* Credits.rtf */; };
+		55D33FBE1351BE90006A197D /* ULIMelodyQueueAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D33FBD1351BE90006A197D /* ULIMelodyQueueAppDelegate.m */; };
+		55D33FC11351BE90006A197D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D33FBF1351BE90006A197D /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		55D33FA61351BE8F006A197D /* ULIMelodyQueue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ULIMelodyQueue.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		55D33FAA1351BE8F006A197D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		55D33FAD1351BE8F006A197D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		55D33FAE1351BE8F006A197D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		55D33FAF1351BE8F006A197D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		55D33FB21351BE8F006A197D /* ULIMelodyQueue-Info.plist */ = {isa = PBXFileReference; path = "ULIMelodyQueue-Info.plist"; sourceTree = "<group>"; };
+		55D33FB41351BE8F006A197D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55D33FB61351BE8F006A197D /* ULIMelodyQueue-Prefix.pch */ = {isa = PBXFileReference; path = "ULIMelodyQueue-Prefix.pch"; sourceTree = "<group>"; };
+		55D33FB71351BE90006A197D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		55D33FBA1351BE90006A197D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		55D33FBC1351BE90006A197D /* ULIMelodyQueueAppDelegate.h */ = {isa = PBXFileReference; path = ULIMelodyQueueAppDelegate.h; sourceTree = "<group>"; };
+		55D33FBD1351BE90006A197D /* ULIMelodyQueueAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ULIMelodyQueueAppDelegate.m; sourceTree = "<group>"; };
+		55D33FC01351BE90006A197D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		55D33FA31351BE8F006A197D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55D33FAB1351BE8F006A197D /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		55D33F9B1351BE8F006A197D = {
+			isa = PBXGroup;
+			children = (
+				55D33FB01351BE8F006A197D /* ULIMelodyQueue */,
+				55D33FA91351BE8F006A197D /* Frameworks */,
+				55D33FA71351BE8F006A197D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		55D33FA71351BE8F006A197D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55D33FA61351BE8F006A197D /* ULIMelodyQueue.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55D33FA91351BE8F006A197D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				55D33FAA1351BE8F006A197D /* Cocoa.framework */,
+				55D33FAC1351BE8F006A197D /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		55D33FAC1351BE8F006A197D /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				55D33FAD1351BE8F006A197D /* AppKit.framework */,
+				55D33FAE1351BE8F006A197D /* CoreData.framework */,
+				55D33FAF1351BE8F006A197D /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		55D33FB01351BE8F006A197D /* ULIMelodyQueue */ = {
+			isa = PBXGroup;
+			children = (
+				55D33FBC1351BE90006A197D /* ULIMelodyQueueAppDelegate.h */,
+				55D33FBD1351BE90006A197D /* ULIMelodyQueueAppDelegate.m */,
+				55D33FBF1351BE90006A197D /* MainMenu.xib */,
+				55D33FB11351BE8F006A197D /* Supporting Files */,
+			);
+			path = ULIMelodyQueue;
+			sourceTree = "<group>";
+		};
+		55D33FB11351BE8F006A197D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				55D33FB21351BE8F006A197D /* ULIMelodyQueue-Info.plist */,
+				55D33FB31351BE8F006A197D /* InfoPlist.strings */,
+				55D33FB61351BE8F006A197D /* ULIMelodyQueue-Prefix.pch */,
+				55D33FB71351BE90006A197D /* main.m */,
+				55D33FB91351BE90006A197D /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		55D33FA51351BE8F006A197D /* ULIMelodyQueue */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55D33FC41351BE90006A197D /* Build configuration list for PBXNativeTarget "ULIMelodyQueue" */;
+			buildPhases = (
+				55D33FA21351BE8F006A197D /* Sources */,
+				55D33FA31351BE8F006A197D /* Frameworks */,
+				55D33FA41351BE8F006A197D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ULIMelodyQueue;
+			productName = ULIMelodyQueue;
+			productReference = 55D33FA61351BE8F006A197D /* ULIMelodyQueue.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		55D33F9D1351BE8F006A197D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "The Void Software";
+			};
+			buildConfigurationList = 55D33FA01351BE8F006A197D /* Build configuration list for PBXProject "ULIMelodyQueue" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 55D33F9B1351BE8F006A197D;
+			productRefGroup = 55D33FA71351BE8F006A197D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				55D33FA51351BE8F006A197D /* ULIMelodyQueue */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		55D33FA41351BE8F006A197D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55D33FB51351BE8F006A197D /* InfoPlist.strings in Resources */,
+				55D33FBB1351BE90006A197D /* Credits.rtf in Resources */,
+				55D33FC11351BE90006A197D /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		55D33FA21351BE8F006A197D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55D33FB81351BE90006A197D /* main.m in Sources */,
+				55D33FBE1351BE90006A197D /* ULIMelodyQueueAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		55D33FB31351BE8F006A197D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55D33FB41351BE8F006A197D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		55D33FB91351BE90006A197D /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55D33FBA1351BE90006A197D /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		55D33FBF1351BE90006A197D /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55D33FC01351BE90006A197D /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		55D33FC21351BE90006A197D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		55D33FC31351BE90006A197D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		55D33FC51351BE90006A197D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ULIMelodyQueue/ULIMelodyQueue-Prefix.pch";
+				INFOPLIST_FILE = "ULIMelodyQueue/ULIMelodyQueue-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		55D33FC61351BE90006A197D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ULIMelodyQueue/ULIMelodyQueue-Prefix.pch";
+				INFOPLIST_FILE = "ULIMelodyQueue/ULIMelodyQueue-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		55D33FA01351BE8F006A197D /* Build configuration list for PBXProject "ULIMelodyQueue" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55D33FC21351BE90006A197D /* Debug */,
+				55D33FC31351BE90006A197D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55D33FC41351BE90006A197D /* Build configuration list for PBXNativeTarget "ULIMelodyQueue" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55D33FC51351BE90006A197D /* Debug */,
+				55D33FC61351BE90006A197D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 55D33F9D1351BE8F006A197D /* Project object */;
+}
