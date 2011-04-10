@@ -13,6 +13,9 @@
 #import "UKTypecastMacros.h"
 
 
+#define $INT(n)		[NSNumber numberWithInt: (n)]
+
+
 @implementation ULIMelodyQueue
 
 // we only use time here as a guideline
@@ -48,6 +51,85 @@ static void		ULIMelodyQueueCalculateBytesForTime( AudioStreamBasicDescription *i
 }
 
 
+static int	ULIMelodyQueuePitchFromNoteChar( unichar inCh )
+{
+	switch( inCh )
+	{
+		case 'c':
+			return 0;
+			break;
+		
+		case 'd':
+			return 200;
+			break;
+			
+		case 'e':
+			return 400;
+			break;
+			
+		case 'f':
+			return 500;
+			break;
+			
+		case 'g':
+			return 700;
+			break;
+			
+		case 'a':
+			return 900;
+			break;
+			
+		case 'h':
+			return 1100;
+			break;
+		
+		case 'b':
+			return -100;
+			break;
+			
+		case '#':
+			return 100;
+			break;
+			
+		case '2':
+			return -2400;
+			break;
+			
+		case '3':
+			return -1200;
+			break;
+			
+		case '4':
+			return 0;
+			break;
+			
+		case '5':
+			return 1200;
+			break;
+			
+		case '6':
+			return 2400;
+			break;
+	}
+	
+	return 0;
+}
+
+
+static int	ULIMelodyQueuePitchFromNote( NSString* inNote )
+{
+	int			thePitch = 0;
+	NSUInteger	count = [inNote length];
+	for( NSUInteger x = 0; x < count; x++ )
+	{
+		unichar		currCh = [inNote characterAtIndex: x];
+		thePitch += ULIMelodyQueuePitchFromNoteChar( currCh );
+	}
+	
+	return thePitch;
+}
+
+
 static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 											AudioQueueRef           inAQ,
 											AudioQueueBufferRef     inCompleteAQBuffer )
@@ -71,7 +153,25 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 	{
 		inCompleteAQBuffer->mAudioDataByteSize = numBytes;		
 		
-		AudioQueueEnqueueBuffer( inAQ, inCompleteAQBuffer, (self->mPacketDescs ? nPackets : 0), self->mPacketDescs );
+		AudioQueueParameterEvent	params[] =
+		{
+			{ kAudioQueueParam_Pitch, 0 * 100 }
+		};
+		
+		NSString	*	theNote = [self->mNotes objectAtIndex: 0];
+		params[0].mValue = ULIMelodyQueuePitchFromNote( theNote );
+		
+		AudioTimeStamp				actualTime = { 0 };
+		AudioQueueEnqueueBufferWithParameters( inAQ, inCompleteAQBuffer,
+											  (self->mPacketDescs ? nPackets : 0),
+											  self->mPacketDescs,
+											  0,
+											  0,
+											  sizeof(params) / sizeof(AudioQueueParameterEvent),
+											  params,
+											  NULL,
+											  &actualTime );
+		//AudioQueueEnqueueBuffer( inAQ, inCompleteAQBuffer, (self->mPacketDescs ? nPackets : 0), self->mPacketDescs );
 		
 		self->mCurrentPacket += nPackets;
 	}
@@ -284,11 +384,43 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 			return;
 		}
 	}
+	
+	// set the volume of the queue
+	Float32		volume = 1.0;
+	err = AudioQueueSetParameter( mQueue, kAudioQueueParam_Volume, volume );
+	if( err != noErr )
+	{
+		NSLog( @"Couldn't set queue volume (%d).", err );
+		return;
+	}
+	
+	// Make sure we get notified when playback stops:
+	err = AudioQueueAddPropertyListener( mQueue, kAudioQueueProperty_IsRunning, ULIMelodyQueueIsRunningCallback, self );
+	if( err != noErr )
+	{
+		NSLog( @"Couldn't add listener to queue (%d).", err );
+		return;
+	}
+	
+	// Turn on whatever is so nice to let us change the sound's pitch:
+	UInt32 propValue = 1;
+	err = AudioQueueSetProperty( mQueue, kAudioQueueProperty_EnableTimePitch, &propValue, sizeof(propValue) );
+	if( err != noErr )
+	{
+		NSLog( @"Couldn't enable time pitch (%d).", err );
+		return;
+	}
 }
 
 
 -(void)	playOne
 {
+	if( mPacketDescs )
+	{
+		free( mPacketDescs );
+		mPacketDescs = NULL;
+	}
+	
 	OSStatus	err = noErr;
 	UInt32		bufferByteSize = 0;
 	
@@ -334,42 +466,7 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		if( mDone )
 			break;
 	}
-	
-	// set the volume of the queue
-	Float32		volume = 1.0;
-	err = AudioQueueSetParameter( mQueue, kAudioQueueParam_Volume, volume );
-	if( err != noErr )
-	{
-		NSLog( @"Couldn't set queue volume (%d).", err );
-		return;
-	}
-	
-	// Make sure we get notified when playback stops:
-	err = AudioQueueAddPropertyListener( mQueue, kAudioQueueProperty_IsRunning, ULIMelodyQueueIsRunningCallback, NULL );
-	if( err != noErr )
-	{
-		NSLog( @"Couldn't add listener to queue (%d).", err );
-		return;
-	}
-	
-	// Turn on whatever is so nice to let us change the sound's pitch:
-	UInt32 propValue = 1;
-	err = AudioQueueSetProperty( mQueue, kAudioQueueProperty_EnableTimePitch, &propValue, sizeof(propValue) );
-	if( err != noErr )
-	{
-		NSLog( @"Couldn't enable time pitch (%d).", err );
-		return;
-	}
-	
-	// Actually change the pitch:
-	Float32		pitch = 4 * 100;
-	err = AudioQueueSetParameter( mQueue, kAudioQueueParam_Pitch, pitch );
-	if( err != noErr )
-	{
-		NSLog( @"Couldn't set pitch (%d).", err );
-		return;
-	}
-	
+		
 	// Kick off playback:
 	err = AudioQueueStart( mQueue, NULL );
 	if( err != noErr )
@@ -382,7 +479,43 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 
 -(void)	playbackStopped
 {
-	[NSApp terminate: nil];
+	if( [mNotes count] > 0 )
+	{
+		[mNotes removeObjectAtIndex: 0];
+		[self playOne];
+	}
+	else
+		[self release];
+}
+
+
+-(void)	play
+{
+	if( mNotes && [mNotes count] > 0 )
+	{
+		[self retain];
+		[self playOne];
+	}
+}
+
+
+-(void)	addNote: (NSString*)inNote
+{
+	if( !mNotes )
+		mNotes = [[NSMutableArray alloc] initWithObjects: inNote, nil];
+	else
+		[mNotes addObject: inNote];
+}
+
+
+-(void)	addMelody: (NSString*)inMelody
+{
+	if( !mNotes )
+		mNotes = [[NSMutableArray alloc] init];
+	
+	NSArray	*	notes = [inMelody componentsSeparatedByString: @" "];
+	for( NSString*	aNote in notes )
+		[mNotes addObject: aNote];
 }
 
 @end

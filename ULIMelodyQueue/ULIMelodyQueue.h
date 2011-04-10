@@ -27,15 +27,19 @@
 	SInt64							mCurrentPacket;
 	bool							mDone;
 	AudioQueueBufferRef				mBuffers[kNumberBuffers];
+	NSMutableArray*					mNotes;
 }
 
 -(id)	initWithInstrument: (NSURL*)inAudioFileURL;
 
--(void)	playOne;
+-(void)	play;
+-(void)	addMelody: (NSString*)inMelody;
+-(void)	addNote: (NSString*)inNote;
 
 // private:
 -(void)	setUpAudioFormat: (NSURL*)inAudioFileURL;
 -(void)	setUpAudioQueue;
 -(void)	playbackStopped;
+-(void)	playOne;
 
 @end

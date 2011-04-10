@@ -13,11 +13,25 @@
 @implementation ULIMelodyQueueAppDelegate
 
 @synthesize window;
+@synthesize melodyField;
+@synthesize instrumentPopUp;
+
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	ULIMelodyQueue	*	melodyPlayer = [[ULIMelodyQueue alloc] initWithInstrument: [[NSBundle mainBundle] URLForResource: @"snd_128" withExtension: @"aiff"]];
-	[melodyPlayer playOne];
+	[self playSong: self];
+}
+
+
+-(IBAction)	playSong: (id)sender
+{
+	NSString*		instrument[] = { @"snd_128", @"snd_129", @"snd_146" };
+	NSUInteger		instrumentIndex = [instrumentPopUp indexOfSelectedItem];
+	
+	NSURL*			soundFile = [[NSBundle mainBundle] URLForResource: instrument[instrumentIndex] withExtension: @"aiff"];
+	ULIMelodyQueue	*	melodyPlayer = [[[ULIMelodyQueue alloc] initWithInstrument: soundFile] autorelease];
+	[melodyPlayer addMelody: [melodyField stringValue]];
+	[melodyPlayer play];
 }
 
 @end

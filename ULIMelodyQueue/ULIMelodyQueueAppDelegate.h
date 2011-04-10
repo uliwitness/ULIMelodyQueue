@@ -10,9 +10,15 @@
 
 @interface ULIMelodyQueueAppDelegate : NSObject <NSApplicationDelegate>
 {
-	NSWindow *window;
+	NSWindow		*window;
+	NSTextField		*melodyField;
+	NSPopUpButton	*instrumentPopUp;
 }
 
-@property (assign) IBOutlet NSWindow *window;
+@property (assign) IBOutlet NSWindow	*	window;
+@property (assign) IBOutlet NSTextField	*	melodyField;
+@property (assign) IBOutlet NSPopUpButton *	instrumentPopUp;
+
+-(IBAction)	playSong: (id)sender;
 
 @end
