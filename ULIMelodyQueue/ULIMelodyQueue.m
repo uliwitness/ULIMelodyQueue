@@ -6,14 +6,34 @@
 //  Copyright 2011 The Void Software. All rights reserved.
 //
 //	Parts extracted from Apple's aqplay sample code,
-//	Copyright © 2007 Apple Inc. All Rights Reserved.
+//	Copyright 2007 Apple Inc. All rights reserved.
 //
+//	This software is provided 'as-is', without any express or implied
+//	warranty. In no event will the authors be held liable for any damages
+//	arising from the use of this software.
+//
+//	Permission is granted to anyone to use this software for any purpose,
+//	including commercial applications, and to alter it and redistribute it
+//	freely, subject to the following restrictions:
+//
+//	   1. The origin of this software must not be misrepresented; you must not
+//	   claim that you wrote the original software. If you use this software
+//	   in a product, an acknowledgment in the product documentation would be
+//	   appreciated but is not required.
+//
+//	   2. Altered source versions must be plainly marked as such, and must not be
+//	   misrepresented as being the original software.
+//
+//	   3. This notice may not be removed or altered from any source
+//	   distribution.
+//
+
+// -----------------------------------------------------------------------------
+//	Headers:
+// -----------------------------------------------------------------------------
 
 #import "ULIMelodyQueue.h"
 #import "UKTypecastMacros.h"
-
-
-#define $INT(n)		[NSNumber numberWithInt: (n)]
 
 
 @implementation ULIMelodyQueue
@@ -50,6 +70,17 @@ static void		ULIMelodyQueueCalculateBytesForTime( AudioStreamBasicDescription *i
 	*outNumPackets = *outBufferSize / inMaxPacketSize;
 }
 
+
+// -----------------------------------------------------------------------------
+//	ULIMelodyQueuePitchFromNoteChar:
+//		Take a single character from a "note" string and turn it into a pitch
+//		modifier.
+//
+//		A typical note is added up of several pitch modifiers in arbitrary order:
+//			a note	-	one of c d e f g a h c
+//			a sign	-	either # or b to indicate a sharp or flat sign.
+//			an octave -	A number between 2 and 5. The default octave is 4.
+// -----------------------------------------------------------------------------
 
 static int	ULIMelodyQueuePitchFromNoteChar( unichar inCh )
 {
@@ -106,15 +137,21 @@ static int	ULIMelodyQueuePitchFromNoteChar( unichar inCh )
 		case '5':
 			return 1200;
 			break;
-			
-		case '6':
-			return 2400;
-			break;
 	}
 	
 	return 0;
 }
 
+
+// -----------------------------------------------------------------------------
+//	ULIMelodyQueuePitchFromNote:
+//		Take a "note" string and turn it into a pitch value suitable for passing
+//		to the audio queue as the pitch parameter.
+//
+//		A typical note is added up of several pitch modifiers in arbitrary order.
+//		See ULIMelodyQueuePitchFromNoteChar for the valid characters and their
+//		function.
+// -----------------------------------------------------------------------------
 
 static int	ULIMelodyQueuePitchFromNote( NSString* inNote )
 {
@@ -129,6 +166,15 @@ static int	ULIMelodyQueuePitchFromNote( NSString* inNote )
 	return thePitch;
 }
 
+
+// -----------------------------------------------------------------------------
+//	ULIMelodyQueueBufferCallback:
+//		Called by the AudioQueue when we need to feed more data from the file.
+//
+//		This is also where we detect when we run out of audio data and request
+//		playback to stop. Once the stop has happened, the property listener
+//		callback will notify the ULIMelodyQueue to advance to the next note.
+// -----------------------------------------------------------------------------
 
 static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 											AudioQueueRef           inAQ,
@@ -171,13 +217,12 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 											  params,
 											  NULL,
 											  &actualTime );
-		//AudioQueueEnqueueBuffer( inAQ, inCompleteAQBuffer, (self->mPacketDescs ? nPackets : 0), self->mPacketDescs );
 		
 		self->mCurrentPacket += nPackets;
 	}
 	else
 	{
-		result = AudioQueueStop( self->mQueue, false );
+		result = AudioQueueStop( self->mQueue, false );	// Stops when the queue has actually finished playback (it calls us a bit ahead of time to avoid gaps).
 		if( result )
 		{
 			NSLog( @"AudioQueueStop(false) failed: %d", (int)result );
@@ -188,6 +233,12 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 	}
 }
 
+
+// -----------------------------------------------------------------------------
+//	ULIMelodyQueueIsRunningCallback:
+//		Called when the queue has actually stopped playing an individual note,
+//		giving us the opportunity to play the next one.
+// -----------------------------------------------------------------------------
 
 static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 											  	AudioQueueRef           inAQ,
@@ -204,6 +255,11 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 
 
 
+// -----------------------------------------------------------------------------
+//	initWithInstrument:
+//		Designated initializer. Takes any audio file that AudioFile can play.
+// -----------------------------------------------------------------------------
+
 -(id)	initWithInstrument: (NSURL*)inAudioFileURL
 {
     self = [super init];
@@ -216,6 +272,11 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
     
     return self;
 }
+
+
+// -----------------------------------------------------------------------------
+//	dealloc
+// -----------------------------------------------------------------------------
 
 -(void)	dealloc
 {
@@ -237,6 +298,12 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
     [super dealloc];
 }
 
+
+// -----------------------------------------------------------------------------
+//	setUpAudioFormat:
+//		Loads the instrument and determines some metadata needed for creation
+//		of the audio queue based on that.
+// -----------------------------------------------------------------------------
 
 -(void)	setUpAudioFormat: (NSURL*)inAudioFileURL
 {
@@ -340,6 +407,11 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 }
 
 
+// -----------------------------------------------------------------------------
+//	setUpAudioQueue
+//		Create our audio queue once the instrument has been loaded.
+// -----------------------------------------------------------------------------
+
 -(void)	setUpAudioQueue
 {
 	OSStatus	err = AudioQueueNewOutput(	&mDataFormat, ULIMelodyQueueBufferCallback, self, 
@@ -413,6 +485,11 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 }
 
 
+// -----------------------------------------------------------------------------
+//	playOne
+//		Kick of playback of one note.
+// -----------------------------------------------------------------------------
+
 -(void)	playOne
 {
 	if( mPacketDescs )
@@ -477,6 +554,12 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 }
 
 
+// -----------------------------------------------------------------------------
+//	playbackStopped
+//		One note has finished playing, enqueue the next one, or actually stop
+//		playback.
+// -----------------------------------------------------------------------------
+
 -(void)	playbackStopped
 {
 	if( [mNotes count] > 0 )
@@ -485,19 +568,30 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		[self playOne];
 	}
 	else
-		[self release];
+		[self release];	// Balance the retain we performed at the start of playback.
 }
 
+
+// -----------------------------------------------------------------------------
+//	play
+//		Trigger playback of our current melody, with our instrument.
+// -----------------------------------------------------------------------------
 
 -(void)	play
 {
 	if( mNotes && [mNotes count] > 0 )
 	{
-		[self retain];
+		[self retain];	// Retain ourselves to ensure we don't disappear from under CoreAudio.
 		[self playOne];
 	}
 }
 
+
+// -----------------------------------------------------------------------------
+//	addNote:
+//		Add a single note to be played back. See ULIMelodyQueuePitchFromNoteChar
+//		for how a note is specified.
+// -----------------------------------------------------------------------------
 
 -(void)	addNote: (NSString*)inNote
 {
@@ -507,6 +601,14 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		[mNotes addObject: inNote];
 }
 
+
+// -----------------------------------------------------------------------------
+//	addMelody:
+//		Add a complete melody to be played back.
+//
+//		inMelody is a space-separated string of notes to play.
+//		See ULIMelodyQueuePitchFromNoteChar for how a note is specified.
+// -----------------------------------------------------------------------------
 
 -(void)	addMelody: (NSString*)inMelody
 {
