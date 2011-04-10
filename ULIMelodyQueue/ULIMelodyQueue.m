@@ -5,6 +5,9 @@
 //  Created by Uli Kusterer on 10.04.11.
 //  Copyright 2011 The Void Software. All rights reserved.
 //
+//	Parts extracted from Apple's aqplay sample code,
+//	Copyright © 2007 Apple Inc. All Rights Reserved.
+//
 
 #import "ULIMelodyQueue.h"
 #import "UKTypecastMacros.h"
