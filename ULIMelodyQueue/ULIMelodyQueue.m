@@ -33,6 +33,7 @@
 // -----------------------------------------------------------------------------
 
 #import "ULIMelodyQueue.h"
+#import "UKHelperMacros.h"
 #import "UKTypecastMacros.h"
 
 
@@ -294,6 +295,8 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		free( mPacketDescs );
 		mPacketDescs = NULL;
 	}
+	
+	DESTROY_DEALLOC(mNotes);
 	
     [super dealloc];
 }

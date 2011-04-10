@@ -41,6 +41,7 @@
 		55D340151351E16A006A197D /* snd_128.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = snd_128.aiff; sourceTree = "<group>"; };
 		55D340161351E16A006A197D /* snd_129.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = snd_129.aiff; sourceTree = "<group>"; };
 		55D340171351E16A006A197D /* snd_146.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = snd_146.aiff; sourceTree = "<group>"; };
+		55D3401B1352020B006A197D /* UKHelperMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UKHelperMacros.h; path = ../../UliKit/UKHelperMacros.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,10 +99,10 @@
 			children = (
 				55D33FBC1351BE90006A197D /* ULIMelodyQueueAppDelegate.h */,
 				55D33FBD1351BE90006A197D /* ULIMelodyQueueAppDelegate.m */,
+				55D33FBF1351BE90006A197D /* MainMenu.xib */,
 				55D33FC71351BEAE006A197D /* ULIMelodyQueue.h */,
 				55D33FC81351BEAE006A197D /* ULIMelodyQueue.m */,
-				55D33FF61351D2D8006A197D /* UKTypecastMacros.h */,
-				55D33FBF1351BE90006A197D /* MainMenu.xib */,
+				55D3401C13520213006A197D /* UliKit */,
 				55D33FB11351BE8F006A197D /* Supporting Files */,
 			);
 			path = ULIMelodyQueue;
@@ -120,6 +121,15 @@
 				55D340171351E16A006A197D /* snd_146.aiff */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		55D3401C13520213006A197D /* UliKit */ = {
+			isa = PBXGroup;
+			children = (
+				55D3401B1352020B006A197D /* UKHelperMacros.h */,
+				55D33FF61351D2D8006A197D /* UKTypecastMacros.h */,
+			);
+			name = UliKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
