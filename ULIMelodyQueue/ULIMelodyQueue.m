@@ -182,7 +182,7 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 											AudioQueueBufferRef     inCompleteAQBuffer )
 {
 	ULIMelodyQueue	*	self = (ULIMelodyQueue*) inUserData;
-	if( self->mDone )
+	if( self->mDone || [self->mNotes count] == 0 )
 		return;
 	
 	UInt32 numBytes = 0;
