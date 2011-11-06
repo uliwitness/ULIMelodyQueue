@@ -15,9 +15,9 @@
 		55D33FC11351BE90006A197D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D33FBF1351BE90006A197D /* MainMenu.xib */; };
 		55D33FC91351BEAE006A197D /* ULIMelodyQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D33FC81351BEAE006A197D /* ULIMelodyQueue.m */; };
 		55D33FF81351D5EC006A197D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D33FF71351D5EC006A197D /* AudioToolbox.framework */; };
-		55D340181351E16A006A197D /* snd_128.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 55D340151351E16A006A197D /* snd_128.aiff */; };
-		55D340191351E16A006A197D /* snd_129.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 55D340161351E16A006A197D /* snd_129.aiff */; };
-		55D3401A1351E16A006A197D /* snd_146.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 55D340171351E16A006A197D /* snd_146.aiff */; };
+		55D340181351E16A006A197D /* harpsichord.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 55D340151351E16A006A197D /* harpsichord.aiff */; };
+		55D340191351E16A006A197D /* boing.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 55D340161351E16A006A197D /* boing.aiff */; };
+		55D3401A1351E16A006A197D /* flute.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 55D340171351E16A006A197D /* flute.aiff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,9 +38,9 @@
 		55D33FC81351BEAE006A197D /* ULIMelodyQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ULIMelodyQueue.m; sourceTree = "<group>"; };
 		55D33FF61351D2D8006A197D /* UKTypecastMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UKTypecastMacros.h; path = ../../UliKit/UKTypecastMacros.h; sourceTree = "<group>"; };
 		55D33FF71351D5EC006A197D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = ../../../../../System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<group>"; };
-		55D340151351E16A006A197D /* snd_128.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = snd_128.aiff; sourceTree = "<group>"; };
-		55D340161351E16A006A197D /* snd_129.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = snd_129.aiff; sourceTree = "<group>"; };
-		55D340171351E16A006A197D /* snd_146.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = snd_146.aiff; sourceTree = "<group>"; };
+		55D340151351E16A006A197D /* harpsichord.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = harpsichord.aiff; sourceTree = "<group>"; };
+		55D340161351E16A006A197D /* boing.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = boing.aiff; sourceTree = "<group>"; };
+		55D340171351E16A006A197D /* flute.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = flute.aiff; sourceTree = "<group>"; };
 		55D3401B1352020B006A197D /* UKHelperMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UKHelperMacros.h; path = ../../UliKit/UKHelperMacros.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,9 +116,9 @@
 				55D33FB61351BE8F006A197D /* ULIMelodyQueue-Prefix.pch */,
 				55D33FB71351BE90006A197D /* main.m */,
 				55D33FB91351BE90006A197D /* Credits.rtf */,
-				55D340151351E16A006A197D /* snd_128.aiff */,
-				55D340161351E16A006A197D /* snd_129.aiff */,
-				55D340171351E16A006A197D /* snd_146.aiff */,
+				55D340151351E16A006A197D /* harpsichord.aiff */,
+				55D340161351E16A006A197D /* boing.aiff */,
+				55D340171351E16A006A197D /* flute.aiff */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -158,6 +158,7 @@
 		55D33F9D1351BE8F006A197D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "The Void Software";
 			};
 			buildConfigurationList = 55D33FA01351BE8F006A197D /* Build configuration list for PBXProject "ULIMelodyQueue" */;
@@ -185,9 +186,9 @@
 				55D33FB51351BE8F006A197D /* InfoPlist.strings in Resources */,
 				55D33FBB1351BE90006A197D /* Credits.rtf in Resources */,
 				55D33FC11351BE90006A197D /* MainMenu.xib in Resources */,
-				55D340181351E16A006A197D /* snd_128.aiff in Resources */,
-				55D340191351E16A006A197D /* snd_129.aiff in Resources */,
-				55D3401A1351E16A006A197D /* snd_146.aiff in Resources */,
+				55D340181351E16A006A197D /* harpsichord.aiff in Resources */,
+				55D340191351E16A006A197D /* boing.aiff in Resources */,
+				55D3401A1351E16A006A197D /* flute.aiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

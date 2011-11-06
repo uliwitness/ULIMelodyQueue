@@ -25,7 +25,7 @@
 
 -(IBAction)	playSong: (id)sender
 {
-	NSString*		instrument[] = { @"snd_128", @"snd_129", @"snd_146" };
+	NSString*		instrument[] = { @"harpsichord", @"boing", @"flute" };
 	NSUInteger		instrumentIndex = [instrumentPopUp indexOfSelectedItem];
 	
 	NSURL*			soundFile = [[NSBundle mainBundle] URLForResource: instrument[instrumentIndex] withExtension: @"aiff"];
