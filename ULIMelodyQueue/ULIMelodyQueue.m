@@ -181,8 +181,10 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 											AudioQueueRef           inAQ,
 											AudioQueueBufferRef     inCompleteAQBuffer )
 {
+	UKLog( @"called" );
+	
 	ULIMelodyQueue	*	self = (ULIMelodyQueue*) inUserData;
-	if( self->mDone || [self->mNotes count] == 0 )
+	if( self->mDone )
 		return;
 	
 	UInt32 numBytes = 0;
@@ -196,7 +198,7 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 		return;
 	}
 	
-	if( nPackets > 0 )
+	if( nPackets > 0 && [self->mNotes count] > 0 )
 	{
 		inCompleteAQBuffer->mAudioDataByteSize = numBytes;		
 		
