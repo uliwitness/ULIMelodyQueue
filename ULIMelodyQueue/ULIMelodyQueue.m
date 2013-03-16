@@ -327,10 +327,16 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 	
 	UInt32 numFormats = size / sizeof(AudioFormatListItem);
 	AudioFormatListItem *formatList = calloc( numFormats, sizeof(AudioFormatListItem) );
+	if( !formatList )
+	{
+		NSLog( @"Couldn't copy audio file's format list." );
+		return;
+	}
 	
 	result = AudioFileGetProperty( mAudioFile, kAudioFilePropertyFormatList, &size, formatList );
 	if( result != noErr )
 	{
+		free( formatList );
 		NSLog( @"Couldn't get audio file's data format (%d).", result );
 		return;
 	}
@@ -360,6 +366,7 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		result = AudioFormatGetPropertyInfo( kAudioFormatProperty_DecodeFormatIDs, 0, NULL, &size );
 		if( result != noErr )
 		{
+			free( formatList );
 			NSLog( @"Couldn't count audio file's decoder IDs (%d).", result );
 			return;
 		}
@@ -369,6 +376,8 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		result = AudioFormatGetProperty( kAudioFormatProperty_DecodeFormatIDs, 0, NULL, &size, decoderIDs );
 		if( result != noErr )
 		{
+			free( formatList );
+			free(decoderIDs);
 			NSLog( @"Couldn't retrieve audio file's decoder IDs (%d).", result );
 			return;
 		}
@@ -436,12 +445,14 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		err = AudioFileGetProperty( mAudioFile, kAudioFilePropertyMagicCookieData, &size, cookie);
 		if( err != noErr )
 		{
+			free( cookie );
 			NSLog( @"Couldn't get cookie from file (%d).", err );
 			return;
 		}
 		err = AudioQueueSetProperty( mQueue, kAudioQueueProperty_MagicCookie, cookie, size );
 		if( err != noErr )
 		{
+			free( cookie );
 			NSLog( @"Couldn't set cookie on queue (%d).", err );
 			return;
 		}
