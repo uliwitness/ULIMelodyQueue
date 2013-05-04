@@ -20,5 +20,6 @@
 @property (assign) IBOutlet NSPopUpButton *	instrumentPopUp;
 
 -(IBAction)	playSong: (id)sender;
+-(IBAction)	stressTest: (id)sender;
 
 @end

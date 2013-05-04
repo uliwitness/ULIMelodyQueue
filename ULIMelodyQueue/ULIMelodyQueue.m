@@ -181,7 +181,7 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 											AudioQueueRef           inAQ,
 											AudioQueueBufferRef     inCompleteAQBuffer )
 {
-	UKLog( @"called" );
+	//UKLog( @"called" );
 	
 	ULIMelodyQueue	*	self = (ULIMelodyQueue*) inUserData;
 	if( self->mDone )
@@ -505,7 +505,7 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 
 // -----------------------------------------------------------------------------
 //	playOne
-//		Kick of playback of one note.
+//		Kick off playback of one note.
 // -----------------------------------------------------------------------------
 
 -(void)	playOne
