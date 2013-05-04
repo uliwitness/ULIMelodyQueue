@@ -405,6 +405,8 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		
 		if( i >= numFormats )
 		{
+			free( formatList );
+			formatList = NULL;
 			NSLog( @"Cannot play any of the formats in this file" );
 			return;
 		}
