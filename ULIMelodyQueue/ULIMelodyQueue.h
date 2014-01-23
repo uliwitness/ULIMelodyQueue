@@ -47,6 +47,16 @@
 #define kNumberBuffers		3
 
 
+@class ULIMelodyQueue;
+
+
+@protocol ULIMelodyQueueDelegate <NSObject>
+
+-(void)	melodyQueueDidFinishPlaying: (ULIMelodyQueue*)inSender;
+
+@end
+
+
 // -----------------------------------------------------------------------------
 //	Classes:
 // -----------------------------------------------------------------------------
@@ -64,7 +74,10 @@
 	bool							mDone;
 	AudioQueueBufferRef				mBuffers[kNumberBuffers];
 	NSMutableArray*					mNotes;
+	id<ULIMelodyQueueDelegate>		mDelegate;
 }
+
+@property (assign,nonatomic) id<ULIMelodyQueueDelegate>	delegate;
 
 -(id)	initWithInstrument: (NSURL*)inAudioFileURL;
 

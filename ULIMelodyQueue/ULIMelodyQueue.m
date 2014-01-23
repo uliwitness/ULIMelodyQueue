@@ -586,7 +586,11 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		[self playOne];
 	}
 	else
-		[self release];	// Balance the retain we performed at the start of playback.
+	{
+		if( [self.delegate respondsToSelector: @selector(melodyQueueDidFinishPlaying:)] )
+			[self.delegate melodyQueueDidFinishPlaying: self];
+		[self performSelector: @selector(release) withObject: nil afterDelay: 0.0];	// Balance the retain we performed at the start of playback.
+	}
 }
 
 
