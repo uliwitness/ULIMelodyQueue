@@ -52,6 +52,7 @@
 
 @protocol ULIMelodyQueueDelegate <NSObject>
 
+@optional
 -(void)	melodyQueueDidFinishPlaying: (ULIMelodyQueue*)inSender;
 
 @end
