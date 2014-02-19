@@ -233,11 +233,6 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 	{
         [self playbackStopped];
 
-		if( result )
-		{
-			NSLog( @"AudioQueueStop(false) failed: %d", (int)result );
-			return;
-		}
 		// reading nPackets == 0 is our EOF condition
 		self->mDone = YES;
 	}
@@ -528,7 +523,8 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 	mCurrentPacket = 0;
 	for( int i = 0; i < kNumberBuffers; ++i )
 	{
-        if (!self.isPlaying) {
+        if (!self.isPlaying)
+		{
             err = AudioQueueAllocateBuffer( mQueue, bufferByteSize, &mBuffers[i] );
             if( err != noErr )
             {
@@ -543,7 +539,8 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 			break;
 	}
 	// Kick off playback:
-    if (!self.isPlaying) {
+    if (!self.isPlaying)
+	{
         AudioQueuePrime(mQueue, 0, NULL);
         err = AudioQueueStart( mQueue, NULL );
         self.isPlaying = YES;
@@ -568,13 +565,16 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 	if( [mNotes count] > 0 )
 	{
 		[mNotes removeObjectAtIndex: 0];
-        if (mNotes.count) {
+        if( mNotes.count )
+		{
             [self playOne];
         }
 	}
 	else
 	{
-        AudioQueueStop(mQueue, false);
+        OSStatus result = AudioQueueStop(mQueue, false);
+		if( result )
+			NSLog( @"AudioQueueStop(false) failed: %d", (int)result );
 		if( [self.delegate respondsToSelector: @selector(melodyQueueDidFinishPlaying:)] )
 			[self.delegate melodyQueueDidFinishPlaying: self];
 		[self performSelector: @selector(release) withObject: nil afterDelay: 0.0];	// Balance the retain we performed at the start of playback.

@@ -10,6 +10,11 @@
 #import "ULIMelodyQueue.h"
 
 
+@interface ULIMelodyQueueAppDelegate () <ULIMelodyQueueDelegate>
+
+@end
+
+
 @implementation ULIMelodyQueueAppDelegate
 
 @synthesize window;
@@ -29,6 +34,7 @@
 	
 	NSURL*			soundFile = [[NSBundle mainBundle] URLForResource: instrument[instrumentIndex] withExtension: @"aiff"];
 	ULIMelodyQueue	*	melodyPlayer = [[[ULIMelodyQueue alloc] initWithInstrument: soundFile] autorelease];
+	[melodyPlayer setDelegate: self];
 	[melodyPlayer addMelody: [melodyField stringValue]];
 	[melodyPlayer play];
 }
@@ -44,6 +50,11 @@
 		[melodyPlayer addMelody: currMelody];
 		[melodyPlayer play];
 	}
+}
+
+-(void)	melodyQueueDidFinishPlaying: (ULIMelodyQueue*)inSender
+{
+	NSLog(@"Finished playing.");
 }
 
 @end
