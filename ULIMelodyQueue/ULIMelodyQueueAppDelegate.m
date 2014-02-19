@@ -57,4 +57,9 @@
 	NSLog(@"Finished playing.");
 }
 
+-(void)	melodyQueueDidStartPlaying: (ULIMelodyQueue*)inSender
+{
+	NSLog(@"Started playing.");
+}
+
 @end

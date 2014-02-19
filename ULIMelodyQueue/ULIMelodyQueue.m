@@ -261,6 +261,8 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 	
 	if( !isPlaying )
 		[self performSelectorOnMainThread: @selector(playbackStopped) withObject: nil waitUntilDone: NO];
+	else if( [self.delegate respondsToSelector: @selector(melodyQueueDidStartPlaying:)] )
+		[(NSObject*)self.delegate performSelectorOnMainThread: @selector(melodyQueueDidStartPlaying:) withObject: self waitUntilDone: NO];
 }
 
 
