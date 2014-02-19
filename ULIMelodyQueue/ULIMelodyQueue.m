@@ -36,6 +36,12 @@
 #import "UKHelperMacros.h"
 #import "UKTypecastMacros.h"
 
+@interface ULIMelodyQueue ()
+
+@property (nonatomic) BOOL isPlaying;
+
+@end
+
 
 @implementation ULIMelodyQueue
 
@@ -225,7 +231,8 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 	}
 	else
 	{
-		result = AudioQueueStop( self->mQueue, false );	// Stops when the queue has actually finished playback (it calls us a bit ahead of time to avoid gaps).
+        [self playbackStopped];
+
 		if( result )
 		{
 			NSLog( @"AudioQueueStop(false) failed: %d", (int)result );
@@ -235,28 +242,6 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 		self->mDone = YES;
 	}
 }
-
-
-// -----------------------------------------------------------------------------
-//	ULIMelodyQueueIsRunningCallback:
-//		Called when the queue has actually stopped playing an individual note,
-//		giving us the opportunity to play the next one.
-// -----------------------------------------------------------------------------
-
-static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
-											  	AudioQueueRef           inAQ,
-											  	AudioQueuePropertyID    inID)
-{
-	ULIMelodyQueue	*	self = (ULIMelodyQueue*) inUserData;
-	bool				isPlaying = false;
-	UInt32				size = sizeof(isPlaying);
-	/*OSStatus*/ AudioQueueGetProperty( inAQ, kAudioQueueProperty_IsRunning, &isPlaying, &size );
-	
-	if( !isPlaying )
-		[self playbackStopped];
-}
-
-
 
 // -----------------------------------------------------------------------------
 //	initWithInstrument:
@@ -484,17 +469,11 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 		return;
 	}
 	
-	// Make sure we get notified when playback stops:
-	err = AudioQueueAddPropertyListener( mQueue, kAudioQueueProperty_IsRunning, ULIMelodyQueueIsRunningCallback, self );
-	if( err != noErr )
-	{
-		NSLog( @"Couldn't add listener to queue (%d).", err );
-		return;
-	}
-	
 	// Turn on whatever is so nice to let us change the sound's pitch:
 	UInt32 propValue = 1;
 	err = AudioQueueSetProperty( mQueue, kAudioQueueProperty_EnableTimePitch, &propValue, sizeof(propValue) );
+    UInt32 timePitchAlgorithm = kAudioQueueTimePitchAlgorithm_Spectral; // supports rate and pitch
+    AudioQueueSetProperty(mQueue, kAudioQueueProperty_TimePitchAlgorithm, &timePitchAlgorithm, sizeof(timePitchAlgorithm));
 	if( err != noErr )
 	{
 		NSLog( @"Couldn't enable time pitch (%d).", err );
@@ -549,21 +528,27 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 	mCurrentPacket = 0;
 	for( int i = 0; i < kNumberBuffers; ++i )
 	{
-		err = AudioQueueAllocateBuffer( mQueue, bufferByteSize, &mBuffers[i] );
-		if( err != noErr )
-		{
-			NSLog( @"AudioQueueAllocateBuffer failed (%d).", err );
-			return;
-		}
+        if (!self.isPlaying) {
+            err = AudioQueueAllocateBuffer( mQueue, bufferByteSize, &mBuffers[i] );
+            if( err != noErr )
+            {
+                NSLog( @"AudioQueueAllocateBuffer failed (%d).", err );
+                return;
+            }
+        }
 		
 		ULIMelodyQueueBufferCallback( self, mQueue, mBuffers[i] );
 		
 		if( mDone )
 			break;
 	}
-		
 	// Kick off playback:
-	err = AudioQueueStart( mQueue, NULL );
+    if (!self.isPlaying) {
+        AudioQueuePrime(mQueue, 0, NULL);
+        err = AudioQueueStart( mQueue, NULL );
+        self.isPlaying = YES;
+    }
+    
 	if( err != noErr )
 	{
 		NSLog( @"AudioQueueStart failed (%d).", err );
@@ -583,10 +568,13 @@ static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
 	if( [mNotes count] > 0 )
 	{
 		[mNotes removeObjectAtIndex: 0];
-		[self playOne];
+        if (mNotes.count) {
+            [self playOne];
+        }
 	}
 	else
 	{
+        AudioQueueStop(mQueue, false);
 		if( [self.delegate respondsToSelector: @selector(melodyQueueDidFinishPlaying:)] )
 			[self.delegate melodyQueueDidFinishPlaying: self];
 		[self performSelector: @selector(release) withObject: nil afterDelay: 0.0];	// Balance the retain we performed at the start of playback.

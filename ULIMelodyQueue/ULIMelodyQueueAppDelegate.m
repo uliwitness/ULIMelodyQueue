@@ -19,7 +19,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[self playSong: self];
 }
 
 
