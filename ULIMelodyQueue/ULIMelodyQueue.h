@@ -86,10 +86,4 @@
 -(void)	addMelody: (NSString*)inMelody;
 -(void)	addNote: (NSString*)inNote;
 
-// private:
--(void)	setUpAudioFormat: (NSURL*)inAudioFileURL;
--(void)	setUpAudioQueue;
--(void)	playbackStopped;
--(void)	playOne;
-
 @end

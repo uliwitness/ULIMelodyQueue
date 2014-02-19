@@ -40,6 +40,12 @@
 
 @property (nonatomic) BOOL isPlaying;
 
+-(void)	playbackStopped;
+-(void)	setUpAudioFormat: (NSURL*)inAudioFileURL;
+-(void)	setUpAudioQueue;
+-(void)	bufferingDone;
+-(void)	playOne;
+
 @end
 
 
@@ -231,12 +237,32 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 	}
 	else
 	{
-        [self playbackStopped];
+        [self bufferingDone];
 
 		// reading nPackets == 0 is our EOF condition
 		self->mDone = YES;
 	}
 }
+
+// -----------------------------------------------------------------------------
+//	ULIMelodyQueueIsRunningCallback:
+//		Called when the queue has actually stopped playing an individual note,
+//		giving us the opportunity to play the next one.
+// -----------------------------------------------------------------------------
+
+static void	ULIMelodyQueueIsRunningCallback(	void *              	inUserData,
+											  	AudioQueueRef           inAQ,
+											  	AudioQueuePropertyID    inID)
+{
+	ULIMelodyQueue	*	self = (ULIMelodyQueue*) inUserData;
+	UInt32				isPlaying = false;	// Yes, kAudioQueueProperty_IsRunning really returns a bool as an UInt32. Who would'a thunk!
+	UInt32				size = sizeof(isPlaying);
+	/*OSStatus*/ AudioQueueGetProperty( inAQ, kAudioQueueProperty_IsRunning, &isPlaying, &size );
+	
+	if( !isPlaying )
+		[self performSelectorOnMainThread: @selector(playbackStopped) withObject: nil waitUntilDone: NO];
+}
+
 
 // -----------------------------------------------------------------------------
 //	initWithInstrument:
@@ -464,6 +490,14 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 		return;
 	}
 	
+	// Make sure we get notified when playback stops:
+	err = AudioQueueAddPropertyListener( mQueue, kAudioQueueProperty_IsRunning, ULIMelodyQueueIsRunningCallback, self );
+	if( err != noErr )
+	{
+		NSLog( @"Couldn't add listener to queue (%d).", err );
+		return;
+	}
+	
 	// Turn on whatever is so nice to let us change the sound's pitch:
 	UInt32 propValue = 1;
 	err = AudioQueueSetProperty( mQueue, kAudioQueueProperty_EnableTimePitch, &propValue, sizeof(propValue) );
@@ -555,30 +589,39 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 
 
 // -----------------------------------------------------------------------------
-//	playbackStopped
-//		One note has finished playing, enqueue the next one, or actually stop
+//	bufferingDone
+//		One note has finished buffering, enqueue the next one, or actually stop
 //		playback.
 // -----------------------------------------------------------------------------
 
--(void)	playbackStopped
+-(void)	bufferingDone
 {
+	BOOL	hadAnotherNote = NO;
 	if( [mNotes count] > 0 )
 	{
 		[mNotes removeObjectAtIndex: 0];
         if( mNotes.count )
 		{
             [self playOne];
+			hadAnotherNote = YES;
         }
 	}
-	else
+	
+	if( !hadAnotherNote )
 	{
         OSStatus result = AudioQueueStop(mQueue, false);
 		if( result )
 			NSLog( @"AudioQueueStop(false) failed: %d", (int)result );
-		if( [self.delegate respondsToSelector: @selector(melodyQueueDidFinishPlaying:)] )
-			[self.delegate melodyQueueDidFinishPlaying: self];
-		[self performSelector: @selector(release) withObject: nil afterDelay: 0.0];	// Balance the retain we performed at the start of playback.
 	}
+}
+
+
+-(void)	playbackStopped
+{
+	if( [self.delegate respondsToSelector: @selector(melodyQueueDidFinishPlaying:)] )
+		[self.delegate melodyQueueDidFinishPlaying: self];
+	[self performSelector: @selector(release) withObject: nil afterDelay: 0.0];	// Balance the retain we performed at the start of playback.
+	self.isPlaying = NO;
 }
 
 
