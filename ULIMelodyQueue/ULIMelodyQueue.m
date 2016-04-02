@@ -199,10 +199,10 @@ static void	ULIMelodyQueueBufferCallback(	void *                  inUserData,
 	if( self->mDone )
 		return;
 	
-	UInt32 numBytes = 0;
+	UInt32 numBytes = inCompleteAQBuffer->mAudioDataBytesCapacity;
 	UInt32 nPackets = self->mNumPacketsToRead;
 	
-	OSStatus result = AudioFileReadPackets( self->mAudioFile, false, &numBytes, self->mPacketDescs, self->mCurrentPacket, &nPackets, 
+	OSStatus result = AudioFileReadPacketData( self->mAudioFile, false, &numBytes, self->mPacketDescs, self->mCurrentPacket, &nPackets,
 											inCompleteAQBuffer->mAudioData );
 	if( result )
 	{
